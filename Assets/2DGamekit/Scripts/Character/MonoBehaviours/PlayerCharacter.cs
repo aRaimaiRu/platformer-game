@@ -414,10 +414,11 @@ namespace Gamekit2D
                 m_CurrentBulletSpawnPoint = facingRightBulletSpawnPoint;
             }
         }
-        // public void CheckFacingWall()
-        // {
-        //     Physics2D.Raycast(this.transform.position)
-        // }
+        public bool CheckFacingWall(float facingx)
+        {   
+            if(Physics2D.Raycast(this.transform.position,new Vector2(facingx,0),0.3f,m_CharacterController2D.groundedLayerMask))Debug.Log("Wall");
+            return Physics2D.Raycast(this.transform.position,new Vector2(facingx,0),0.3f,m_CharacterController2D.groundedLayerMask);
+        }
 
         public float GetFacing()
         {
