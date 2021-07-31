@@ -17,7 +17,6 @@ namespace Gamekit2D
         {
             get { return m_InventoryController; }
         }
-
         public SpriteRenderer spriteRenderer;
         public Damageable damageable;
         public Damager meleeDamager;
@@ -25,8 +24,8 @@ namespace Gamekit2D
         public Transform facingRightBulletSpawnPoint;
         public BulletPool bulletPool;
         public Transform cameraFollowTarget;
-
         public float maxSpeed = 10f;
+        public float originalmaxSpeed = 10f;
         public float groundAcceleration = 100f;
         public float groundDeceleration = 100f;
         [Range(0f, 1f)] public float pushingSpeedProportion;
@@ -36,7 +35,7 @@ namespace Gamekit2D
         public float gravity = 50f;
         public float jumpSpeed = 20f;
         public float jumpAbortSpeedReduction = 100f;
-
+        [SerializeField]public TileBase SlowGround;
         [Range(k_MinHurtJumpAngle, k_MaxHurtJumpAngle)] public float hurtJumpAngle = 45f;
         public float hurtJumpSpeed = 5f;
         public float flickeringDuration = 0.1f;
@@ -118,7 +117,7 @@ namespace Gamekit2D
         void Awake()
         {
             s_PlayerInstance = this;
-
+            originalmaxSpeed = maxSpeed;
             m_CharacterController2D = GetComponent<CharacterController2D>();
             m_Animator = GetComponent<Animator>();
             m_Capsule = GetComponent<CapsuleCollider2D>();
@@ -453,7 +452,12 @@ namespace Gamekit2D
             }
             else
                 m_CurrentSurface = null;
+            if(SlowGround!= null && SlowGround==m_CurrentSurface ){
+                maxSpeed = 2;
 
+            }else{
+                maxSpeed = originalmaxSpeed;
+            }
             m_Animator.SetBool(m_HashGroundedPara, grounded);
 
             return grounded;
@@ -462,13 +466,11 @@ namespace Gamekit2D
         public void FindCurrentSurface()
         {
             Collider2D groundCollider = m_CharacterController2D.GroundColliders[0];
-
             if (groundCollider == null)
                 groundCollider = m_CharacterController2D.GroundColliders[1];
 
             if (groundCollider == null)
                 return;
-
             TileBase b = PhysicsHelper.FindTileForOverride(groundCollider, transform.position, Vector2.down);
             if (b != null)
             {
