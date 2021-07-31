@@ -25,6 +25,7 @@ namespace Gamekit2D
         public BulletPool bulletPool;
         public Transform cameraFollowTarget;
         public float maxSpeed = 10f;
+        public float SlowGroundSpeedReduction = 8f;
         public float originalmaxSpeed = 10f;
         public float groundAcceleration = 100f;
         public float groundDeceleration = 100f;
@@ -453,7 +454,7 @@ namespace Gamekit2D
             else
                 m_CurrentSurface = null;
             if(SlowGround!= null && SlowGround==m_CurrentSurface ){
-                maxSpeed = 2;
+                maxSpeed = originalmaxSpeed-SlowGroundSpeedReduction;
 
             }else{
                 maxSpeed = originalmaxSpeed;
