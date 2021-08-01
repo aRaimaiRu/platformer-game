@@ -8,6 +8,8 @@ namespace Gamekit2D
     [CustomEditor(typeof(PlayerCharacter))]
     public class PlayerCharacterEditor : Editor
     {
+        SerializedProperty m_SlowGround;
+        SerializedProperty m_SlowGroundSpeedReduction;
         SerializedProperty m_SpriteRendererProp;
         SerializedProperty m_DamageableProp;
         SerializedProperty m_MeleeDamagerProp;
@@ -64,6 +66,8 @@ namespace Gamekit2D
         bool m_CameraFollowSettingsFoldout;
         bool m_MiscSettingsFoldout;
 
+        readonly GUIContent m_SlowGroundContent = new GUIContent("Slowground");
+        readonly GUIContent m_SlowGroundSpeedContent = new GUIContent("SlowGroundSpeedReduction");
         readonly GUIContent m_SpriteRendererContent = new GUIContent("Sprite Renderer");
         readonly GUIContent m_DamageableContent = new GUIContent("Damageable");
         readonly GUIContent m_MeleeDamagerContent = new GUIContent("Melee Damager");
@@ -122,6 +126,8 @@ namespace Gamekit2D
 
         void OnEnable ()
         {
+            m_SlowGround = serializedObject.FindProperty("SlowGround");
+            m_SlowGroundSpeedReduction = serializedObject.FindProperty("SlowGroundSpeedReduction");
             m_SpriteRendererProp = serializedObject.FindProperty("spriteRenderer");
             m_DamageableProp = serializedObject.FindProperty("damageable");
             m_MeleeDamagerProp = serializedObject.FindProperty("meleeDamager");
@@ -179,7 +185,9 @@ namespace Gamekit2D
             m_ReferencesFoldout = EditorGUILayout.Foldout (m_ReferencesFoldout, m_ReferencesContent);
 
             if (m_ReferencesFoldout)
-            {
+            {   
+                
+                EditorGUILayout.PropertyField (m_SlowGround, m_SlowGroundContent);
                 EditorGUILayout.PropertyField (m_SpriteRendererProp, m_SpriteRendererContent);
                 EditorGUILayout.PropertyField (m_DamageableProp, m_DamageableContent);
                 EditorGUILayout.PropertyField (m_MeleeDamagerProp, m_MeleeDamagerContent);
@@ -199,6 +207,7 @@ namespace Gamekit2D
 
             if (m_MovementSettingsFoldout)
             {
+                EditorGUILayout.PropertyField (m_SlowGroundSpeedReduction, m_SlowGroundSpeedContent);
                 EditorGUILayout.PropertyField(m_MaxSpeedProp, m_MaxSpeedContent);
                 EditorGUILayout.PropertyField(m_GroundAccelerationProp, m_GroundAccelerationContent);
                 EditorGUILayout.PropertyField(m_GroundDecelerationProp, m_GroundDecelerationContent);
