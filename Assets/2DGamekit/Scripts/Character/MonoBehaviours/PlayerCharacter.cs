@@ -416,7 +416,7 @@ namespace Gamekit2D
         }
         public bool CheckFacingWall(float facingx)
         {   
-            if(Physics2D.Raycast(this.transform.position,new Vector2(facingx,0),0.3f,m_CharacterController2D.groundedLayerMask))Debug.Log("Wall");
+            // if(Physics2D.Raycast(this.transform.position,new Vector2(facingx,0),0.3f,m_CharacterController2D.groundedLayerMask))Debug.Log("Wall");
             return Physics2D.Raycast(this.transform.position,new Vector2(facingx,0),0.3f,m_CharacterController2D.groundedLayerMask);
         }
 

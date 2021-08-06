@@ -6,6 +6,7 @@ using BTAI;
 using UnityEngine.Events;
 using System;
 using Gamekit2D;
+using Random=UnityEngine.Random;
 public class Alibaba : MonoBehaviour
 {
      Root ai;
@@ -22,6 +23,7 @@ public class Alibaba : MonoBehaviour
     public bool Alive = true;
     public Transform AttackPoint1;
     public float Atk1_speed;
+    public GameObject SandMissile;
     void Start()
    {
         animator = GetComponent<Animator>();
@@ -41,7 +43,8 @@ public class Alibaba : MonoBehaviour
                 BT.SetActive(trail,true),
                 BT.Trigger(animator, "Attack"),
                 BT.Wait(6.0f),
-                BT.SetActive(trail,false)
+                BT.SetActive(trail,false),
+                BT.Call(SpawnSandMissile)
             )
 
 
@@ -79,7 +82,6 @@ public class Alibaba : MonoBehaviour
     }
     public void SetPosition(Vector2 newMoveVector)
     {
-        Debug.Log(newMoveVector);
         this.transform.position = new Vector3(newMoveVector.x,newMoveVector.y,0);
     }
     public Vector2 getCurrentPosition(){
@@ -96,6 +98,13 @@ public class Alibaba : MonoBehaviour
         Vector2 target = new Vector2(defaultPosition.position.x,rb.position.y);
         Vector2 newPos = Vector2.MoveTowards(rb.position,target,Atk1_speed*Time.deltaTime*3);
         rb.MovePosition(newPos);
+
+    }
+    public void SpawnSandMissile(){
+        for(int i=0;i<3;i++){
+            Vector3 buffer = new Vector3(this.transform.position.x+Random.Range(10,40)*0.1f,this.transform.position.y+Random.Range(10,40)*0.1f,0);
+            Instantiate(SandMissile,buffer,Quaternion.identity);
+        }
 
     }
 
