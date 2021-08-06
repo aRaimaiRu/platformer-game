@@ -334,6 +334,7 @@ namespace BTAI
             {
                 switch (children[activeChild].Tick())
                 {
+
                     case BTState.Continue:
                         return BTState.Continue;
                     case BTState.Abort:
