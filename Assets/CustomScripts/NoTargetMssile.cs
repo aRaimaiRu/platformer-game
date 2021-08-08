@@ -2,26 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LockTargetMissle : MonoBehaviour
+public class NoTargetMssile : MonoBehaviour
 {
-    public Transform target;
-    public float Speed =2;
-    private Vector2 destination;
+    public float Speed = 2.0f;
     public Vector3 dir;
     public float lifetime = 15.0f;
     public float delay = 1.0f;
     // Start is called before the first frame update
-    void Start()
-    {   
-    if(target ==null){
-        target = GameObject.FindGameObjectWithTag("Player").transform;
-         //get direction to target no magnitude
-        dir = (target.transform.position - this.gameObject.transform.position).normalized;
-        //rotate look at target position
-        this.transform.LookAt(target);
-        
-
-    }
+    public virtual void Start()
+    {  
+        if(dir ==null) dir= new Vector3(0,-1,0);
     }
 
     // Update is called once per frame
@@ -33,7 +23,6 @@ public class LockTargetMissle : MonoBehaviour
         if(lifetime <0)Destroy(this.gameObject);
         //this make object move toward exactly point target
         // this.transform.position =Vector2.MoveTowards(GetCurrentPosition(),destination,Speed*Time.deltaTime);
-
         this.transform.position = this.transform.position+(dir * Time.deltaTime * Speed);
     }
     Vector2 GetCurrentPosition(){

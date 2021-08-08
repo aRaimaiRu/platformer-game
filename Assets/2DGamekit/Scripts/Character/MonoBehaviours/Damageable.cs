@@ -163,6 +163,10 @@ namespace Gamekit2D
             OnHealthSet.Invoke(this);
         }
 
+        public int GetCurrentHealth(){
+            return m_CurrentHealth;
+        }
+
 
     }
 }
