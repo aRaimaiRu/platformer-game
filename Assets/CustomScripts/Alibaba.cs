@@ -31,6 +31,11 @@ public class Alibaba : MonoBehaviour
     public Transform Top_Position;
     public Transform Bottom_Position;
     public GameObject Missile;
+    [Header("Once Upon a Time")]
+    public GameObject OUAT_DefaultPosition;
+    public GameObject OpenSesamePortal;
+    public float teleportDelay=0.5f;
+
     
 
     void Start()
@@ -48,6 +53,8 @@ public class Alibaba : MonoBehaviour
             // BT.Trigger(animator, "Intro"),
             BT.Wait(1.0f),
             BT.While(isNotOnceUponATime).OpenBranch(
+                BT.Call(OpenSesame),
+                BT.Wait(teleportDelay*2),
                 BT.Trigger(animator, "idle"),
                 // BT.Wait(1.0f),
                 BT.Call(TopDownSandMissile),
@@ -62,7 +69,8 @@ public class Alibaba : MonoBehaviour
             //trigger Aura
             BT.While(isAlive).OpenBranch(
                 //trigger skill
-                BT.Wait(60.0f)
+                // BT.Call(OpenSesame),
+                // BT.Wait(60.0f)
                 
             )
 
@@ -129,7 +137,6 @@ public class Alibaba : MonoBehaviour
 
     }
     public void TopDownSandMissile(){
-        Debug.Log("TopDownSand");
         StartCoroutine(spawnTopDownMissile());
     }
     IEnumerator spawnTopDownMissile(){
@@ -156,6 +163,20 @@ public class Alibaba : MonoBehaviour
     public bool isNotOnceUponATime(){
         return damageable.GetCurrentHealth() > 4;
 
+    }
+
+    public void OpenSesame(){
+        StartCoroutine(OpenSesameCoroutine(teleportDelay));
+    }
+
+    IEnumerator OpenSesameCoroutine(float delay){
+        Vector3 buffer = GameObject.FindGameObjectWithTag("Player").transform.position;
+        Instantiate(OpenSesamePortal,this.transform.position,Quaternion.identity);//at self position
+        Instantiate(OpenSesamePortal,buffer,Quaternion.identity);//at player position
+        yield return new WaitForSeconds(delay);
+        this.transform.position = buffer;
+        yield return new WaitForSeconds(delay);
+        this.transform.position = OUAT_DefaultPosition.transform.position;
     }
 
 }
