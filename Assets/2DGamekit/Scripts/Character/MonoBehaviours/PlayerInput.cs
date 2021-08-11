@@ -15,9 +15,10 @@ namespace Gamekit2D
         public bool HaveControl { get { return m_HaveControl; } }
 
         public InputButton Pause = new InputButton(KeyCode.Escape, XboxControllerButtons.Menu);
-        public InputButton Interact = new InputButton(KeyCode.E, XboxControllerButtons.Y);
-        public InputButton MeleeAttack = new InputButton(KeyCode.K, XboxControllerButtons.X);
-        public InputButton RangedAttack = new InputButton(KeyCode.O, XboxControllerButtons.B);
+        public InputButton Skill = new InputButton(KeyCode.V, XboxControllerButtons.RightBumper);
+        public InputButton Interact = new InputButton(KeyCode.C, XboxControllerButtons.Y);
+        public InputButton MeleeAttack = new InputButton(KeyCode.Z, XboxControllerButtons.X);
+        public InputButton RangedAttack = new InputButton(KeyCode.X, XboxControllerButtons.B);
         public InputButton Jump = new InputButton(KeyCode.Space, XboxControllerButtons.A);
         public InputAxis Horizontal = new InputAxis(KeyCode.D, KeyCode.A, XboxControllerAxes.LeftstickHorizontal);
         public InputAxis Vertical = new InputAxis(KeyCode.W, KeyCode.S, XboxControllerAxes.LeftstickVertical);
@@ -55,6 +56,7 @@ namespace Gamekit2D
 
         protected override void GetInputs(bool fixedUpdateHappened)
         {
+            Skill.Get(fixedUpdateHappened, inputType);
             Pause.Get(fixedUpdateHappened, inputType);
             Interact.Get(fixedUpdateHappened, inputType);
             MeleeAttack.Get(fixedUpdateHappened, inputType);
@@ -72,7 +74,7 @@ namespace Gamekit2D
         public override void GainControl()
         {
             m_HaveControl = true;
-
+            GainControl(Skill);
             GainControl(Pause);
             GainControl(Interact);
             GainControl(MeleeAttack);
@@ -85,7 +87,7 @@ namespace Gamekit2D
         public override void ReleaseControl(bool resetValues = true)
         {
             m_HaveControl = false;
-
+            ReleaseControl(Skill,resetValues);
             ReleaseControl(Pause, resetValues);
             ReleaseControl(Interact, resetValues);
             ReleaseControl(MeleeAttack, resetValues);

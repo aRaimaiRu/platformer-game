@@ -748,6 +748,10 @@ namespace Gamekit2D
         {
             return PlayerInput.Instance.MeleeAttack.Down;
         }
+        public bool CheckForOUATAttackInput()
+        {
+            return PlayerInput.Instance.Skill.Down;
+        }
 
         public void MeleeAttack()
         {
