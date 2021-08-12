@@ -828,5 +828,6 @@ namespace Gamekit2D
         public void updateOUAT_Gauge(float multiply){
             OUAT_Gauge.value =Mathf.Clamp(OUAT_Gauge.value+Time.deltaTime*multiply,OUAT_Gauge.minValue,OUAT_Gauge.maxValue);
         }
+        
     }
 }
