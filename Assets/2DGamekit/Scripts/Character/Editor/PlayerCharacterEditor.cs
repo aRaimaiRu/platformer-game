@@ -8,6 +8,7 @@ namespace Gamekit2D
     [CustomEditor(typeof(PlayerCharacter))]
     public class PlayerCharacterEditor : Editor
     {
+        SerializedProperty m_OUATTimeSlider;
         SerializedProperty m_SlowGround;
         SerializedProperty m_SlowGroundSpeedReduction;
         SerializedProperty m_SpriteRendererProp;
@@ -65,7 +66,9 @@ namespace Gamekit2D
         bool m_AudioSettingsFoldout;
         bool m_CameraFollowSettingsFoldout;
         bool m_MiscSettingsFoldout;
+        bool m_OUATSettingFoldout;
 
+        readonly GUIContent m_OUATTimeSliderContent = new GUIContent("OUAT Time Slider");
         readonly GUIContent m_SlowGroundContent = new GUIContent("Slowground");
         readonly GUIContent m_SlowGroundSpeedContent = new GUIContent("SlowGroundSpeedReduction");
         readonly GUIContent m_SpriteRendererContent = new GUIContent("Sprite Renderer");
@@ -126,6 +129,7 @@ namespace Gamekit2D
 
         void OnEnable ()
         {
+            m_OUATTimeSlider = serializedObject.FindProperty("OUAT_Gauge");
             m_SlowGround = serializedObject.FindProperty("SlowGround");
             m_SlowGroundSpeedReduction = serializedObject.FindProperty("SlowGroundSpeedReduction");
             m_SpriteRendererProp = serializedObject.FindProperty("spriteRenderer");
@@ -181,7 +185,7 @@ namespace Gamekit2D
 
             EditorGUILayout.BeginVertical (GUI.skin.box);
             EditorGUI.indentLevel++;
-
+            
             m_ReferencesFoldout = EditorGUILayout.Foldout (m_ReferencesFoldout, m_ReferencesContent);
 
             if (m_ReferencesFoldout)
@@ -326,7 +330,15 @@ namespace Gamekit2D
 
             EditorGUI.indentLevel--;
             EditorGUILayout.EndVertical();
-
+            EditorGUILayout.BeginVertical(GUI.skin.box);
+            EditorGUI.indentLevel++;
+            m_OUATSettingFoldout= EditorGUILayout.Foldout(m_OUATSettingFoldout, m_OUATTimeSliderContent);
+            if(m_OUATSettingFoldout)
+            {
+                EditorGUILayout.PropertyField(m_OUATTimeSlider, m_OUATTimeSliderContent);
+            }
+            EditorGUI.indentLevel--;
+            EditorGUILayout.EndVertical();
             serializedObject.ApplyModifiedProperties ();
         }
     }

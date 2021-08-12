@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Security.Principal;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Tilemaps;
-
 namespace Gamekit2D
 {
     [RequireComponent(typeof(CharacterController2D))]
@@ -17,6 +17,7 @@ namespace Gamekit2D
         {
             get { return m_InventoryController; }
         }
+        public Slider OUAT_Gauge;
         public SpriteRenderer spriteRenderer;
         public Damageable damageable;
         public Damager meleeDamager;
@@ -820,6 +821,12 @@ namespace Gamekit2D
         public void KeyInventoryEvent()
         {
             if (KeyUI.Instance != null) KeyUI.Instance.ChangeKeyUI(m_InventoryController);
+        }
+        public void resetOUAT_Gauge(){
+            OUAT_Gauge.value=0;
+        }
+        public void updateOUAT_Gauge(float multiply){
+            OUAT_Gauge.value =Mathf.Clamp(OUAT_Gauge.value+Time.deltaTime*multiply,OUAT_Gauge.minValue,OUAT_Gauge.maxValue);
         }
     }
 }
