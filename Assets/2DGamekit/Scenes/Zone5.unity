@@ -44680,6 +44680,11 @@ PrefabInstance:
       propertyPath: OnGainHealth.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: Damageable, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 114854669915511232, guid: 73360cdb4e1e7ed4897690f9d57fd0eb,
+        type: 3}
+      propertyPath: OUAT_Gauge
+      value: 
+      objectReference: {fileID: 1712954697}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73360cdb4e1e7ed4897690f9d57fd0eb, type: 3}
 --- !u!1 &1409900102 stripped
@@ -46928,6 +46933,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c48d4101c920ef47a787da13f097d90, type: 3}
+--- !u!114 &1712954697 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4585761884056614506, guid: 2d2745d2a8668e644a921a4848c9bc90,
+    type: 3}
+  m_PrefabInstance: {fileID: 1848856010}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1716219479
 PrefabInstance:
   m_ObjectHideFlags: 0
