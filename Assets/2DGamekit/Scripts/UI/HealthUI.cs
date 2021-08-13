@@ -44,6 +44,7 @@ namespace Gamekit2D
 
         public void ChangeHitPointUI (Damageable damageable)
         {
+            Debug.Log(m_HealthIconAnimators);
             if(m_HealthIconAnimators == null)
                 return;
             

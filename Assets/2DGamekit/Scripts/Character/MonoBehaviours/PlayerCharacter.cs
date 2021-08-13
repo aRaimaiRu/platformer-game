@@ -452,7 +452,7 @@ namespace Gamekit2D
             if (grounded)
             {
                 FindCurrentSurface();
-
+                Debug.Log(m_CurrentSurface);
                 if (!wasGrounded && m_MoveVector.y < -1.0f)
                 {//only play the landing sound if falling "fast" enough (avoid small bump playing the landing sound)
                     landingAudioPlayer.PlayRandomSound(m_CurrentSurface);
