@@ -10,6 +10,10 @@ namespace Gamekit2D
     [RequireComponent(typeof(Animator))]
     public class PlayerCharacter : MonoBehaviour
     {
+        bool OUATing;
+        List<UseSkill> skillList;
+        delegate void UseSkill();
+        public int currentSkill=0;
         static protected PlayerCharacter s_PlayerInstance;
         static public PlayerCharacter PlayerInstance { get { return s_PlayerInstance; } }
 
@@ -131,6 +135,7 @@ namespace Gamekit2D
 
         void Start()
         {
+            CreateSkillList();
             hurtJumpAngle = Mathf.Clamp(hurtJumpAngle, k_MinHurtJumpAngle, k_MaxHurtJumpAngle);
             m_TanHurtJumpAngle = Mathf.Tan(Mathf.Deg2Rad * hurtJumpAngle);
             m_FlickeringWait = new WaitForSeconds(flickeringDuration);
@@ -202,6 +207,7 @@ namespace Gamekit2D
 
         void FixedUpdate()
         { 
+            skillList[currentSkill]();
             m_CharacterController2D.Move(m_MoveVector * Time.deltaTime);
             m_Animator.SetFloat(m_HashHorizontalSpeedPara, m_MoveVector.x);
             m_Animator.SetFloat(m_HashVerticalSpeedPara, m_MoveVector.y);
@@ -301,7 +307,7 @@ namespace Gamekit2D
 
         protected IEnumerator Shoot()
         {
-            while (PlayerInput.Instance.RangedAttack.Held)
+            while (PlayerInput.Instance.Skill.Held)
             {
                 if (Time.time >= m_NextShotTime)
                 {
@@ -624,42 +630,68 @@ namespace Gamekit2D
             damageable.DisableInvulnerability();
         }
 
-        public bool CheckForHoldingGun()
-        {
-            bool holdingGun = false;
+        // public bool CheckForHoldingGun()
+        // {
+        //     bool holdingGun = false;
 
-            if (PlayerInput.Instance.RangedAttack.Held)
+        //     if (PlayerInput.Instance.RangedAttack.Held)
+        //     {
+        //         holdingGun = true;
+        //         m_Animator.SetBool(m_HashHoldingGunPara, true);
+        //         m_HoldingGunTimeRemaining = holdingGunTimeoutDuration;
+        //     }
+        //     else
+        //     {
+        //         m_HoldingGunTimeRemaining -= Time.deltaTime;
+
+        //         if (m_HoldingGunTimeRemaining <= 0f)
+        //         {
+        //             m_Animator.SetBool(m_HashHoldingGunPara, false);
+        //         }
+        //     }
+
+        //     return holdingGun;
+        // }
+        public bool CheckForHoldingGun(){
+            if(PlayerInput.Instance.RangedAttack.Down)
             {
-                holdingGun = true;
+                OUATing = true;
                 m_Animator.SetBool(m_HashHoldingGunPara, true);
-                m_HoldingGunTimeRemaining = holdingGunTimeoutDuration;
-            }
-            else
-            {
-                m_HoldingGunTimeRemaining -= Time.deltaTime;
-
-                if (m_HoldingGunTimeRemaining <= 0f)
-                {
-                    m_Animator.SetBool(m_HashHoldingGunPara, false);
-                }
+            }else if(m_Animator.GetBool(m_HashHoldingGunPara)){ //OUATing
+                updateOUAT_Gauge(-1.0f);
+                if(OUAT_Gauge.value <= 0.1){
+                m_Animator.SetBool(m_HashHoldingGunPara, false);
             }
 
-            return holdingGun;
+            }
+            return m_Animator.GetBool(m_HashHoldingGunPara);
         }
 
-        public void CheckAndFireGun()
-        {
-            if (PlayerInput.Instance.RangedAttack.Held && m_Animator.GetBool(m_HashHoldingGunPara))
-            {
-                if (m_ShootingCoroutine == null)
-                    m_ShootingCoroutine = StartCoroutine(Shoot());
-            }
+        // public void CheckAndFireGun()
+        // {
+            // if (PlayerInput.Instance.RangedAttack.Held && m_Animator.GetBool(m_HashHoldingGunPara))
+            // {
+            //     if (m_ShootingCoroutine == null)
+            //         m_ShootingCoroutine = StartCoroutine(Shoot());
+            // }
 
-            if ((PlayerInput.Instance.RangedAttack.Up || !m_Animator.GetBool(m_HashHoldingGunPara)) && m_ShootingCoroutine != null)
+            // if ((PlayerInput.Instance.RangedAttack.Up || !m_Animator.GetBool(m_HashHoldingGunPara)) && m_ShootingCoroutine != null)
+            // {
+            //     StopCoroutine(m_ShootingCoroutine);
+            //     m_ShootingCoroutine = null;
+            // }
+        // }
+        public void CheckAndFireGun(){
+            if(m_Animator.GetBool(m_HashHoldingGunPara)&&PlayerInput.Instance.Skill.Down){
+                Debug.Log(m_ShootingCoroutine);
+                if (m_ShootingCoroutine == null) m_ShootingCoroutine = StartCoroutine(Shoot());
+            }
+            if ((PlayerInput.Instance.Skill.Up || !m_Animator.GetBool(m_HashHoldingGunPara)) && m_ShootingCoroutine != null)
             {
                 StopCoroutine(m_ShootingCoroutine);
                 m_ShootingCoroutine = null;
             }
+            
         }
 
         public void ForceNotHoldingGun()
@@ -829,5 +861,18 @@ namespace Gamekit2D
             OUAT_Gauge.value =Mathf.Clamp(OUAT_Gauge.value+Time.deltaTime*multiply,OUAT_Gauge.minValue,OUAT_Gauge.maxValue);
         }
         
+        void CreateSkillList(){
+            skillList = new List<UseSkill>();
+            skillList.Add(Skill1);
+            skillList.Add(Skill2);
+
+        }
+
+        public void Skill1(){
+            Debug.Log("Skill1");
+        }
+        public void Skill2(){
+            Debug.Log("Skill2");
+        }
     }
 }

@@ -24,8 +24,8 @@ namespace Gamekit2D
                 m_MonoBehaviour.SetVerticalMovement(m_MonoBehaviour.jumpSpeed);
             else if(m_MonoBehaviour.CheckForMeleeAttackInput ())
                 m_MonoBehaviour.MeleeAttack();
-            else if(m_MonoBehaviour.CheckForOUATAttackInput ())
-                m_MonoBehaviour.resetOUAT_Gauge();
+            // else if(m_MonoBehaviour.CheckForOUATAttackInput ()) skill
+                // m_MonoBehaviour.resetOUAT_Gauge();
 
         //walljump = check ground = false and facing ground = true and press jump;
         }

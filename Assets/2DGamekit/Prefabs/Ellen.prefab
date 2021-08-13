@@ -340,11 +340,11 @@ MonoBehaviour:
     controllerButton: 8
     m_Enabled: 1
   Skill:
-    key: 118
+    key: 120
     controllerButton: 9
     m_Enabled: 1
   Interact:
-    key: 99
+    key: 102
     controllerButton: 4
     m_Enabled: 1
   MeleeAttack:
@@ -352,7 +352,7 @@ MonoBehaviour:
     controllerButton: 3
     m_Enabled: 1
   RangedAttack:
-    key: 120
+    key: 118
     controllerButton: 10
     m_Enabled: 0
   Jump:
@@ -382,6 +382,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49de84fa3d321d245bc900e599de015f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentSkill: 0
+  OUAT_Gauge: {fileID: 0}
   spriteRenderer: {fileID: 212611162554739646}
   damageable: {fileID: 114774311958850474}
   meleeDamager: {fileID: 114460243114916098}
