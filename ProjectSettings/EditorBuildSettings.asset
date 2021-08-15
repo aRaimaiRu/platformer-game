@@ -62,4 +62,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/sceneboss1.unity
     guid: df0dfb6a8b5cae0409dc9b03284d79da
+  - enabled: 1
+    path: 
+    guid: e0f61b7b038d8bc44beaece31009c956
+  - enabled: 1
+    path: 
+    guid: 89385ba62e0298042b19c940bd45e172
+  - enabled: 1
+    path: Assets/asdasd.unity
+    guid: 05c2bc7fdd9e9cc4e873364ce5c846f7
   m_configObjects: {}
