@@ -11092,7 +11092,7 @@ ScriptedImporter:
     spriteName: 
     isGroup: 1
     parentIndex: -1
-    spriteID: 
+    spriteID: 00000000000000000000000000000000
     layerID: 519
     mosaicPosition: {x: 0, y: 0}
   - name: <Group>
@@ -11113,7 +11113,7 @@ ScriptedImporter:
     spriteName: 
     isGroup: 1
     parentIndex: 0
-    spriteID: 
+    spriteID: 00000000000000000000000000000000
     layerID: 515
     mosaicPosition: {x: 0, y: 0}
   - name: "<Path>\_+\_<Path>\_+\_<Path>\_+\_<Path>\_+\_<Path>\_+\_<Path>\_+\_<Path>\_+\_<Path>\_+\_<Path>\_+\_<Path>"
@@ -14298,7 +14298,7 @@ ScriptedImporter:
     spriteName: 
     isGroup: 1
     parentIndex: -1
-    spriteID: 
+    spriteID: 00000000000000000000000000000000
     layerID: 59
     mosaicPosition: {x: 0, y: 0}
   - name: <Path>
@@ -14312,7 +14312,7 @@ ScriptedImporter:
     spriteName: 
     isGroup: 1
     parentIndex: 458
-    spriteID: 
+    spriteID: 00000000000000000000000000000000
     layerID: 56
     mosaicPosition: {x: 0, y: 0}
   - name: "<Path>\_+\_<Path>\_+\_<Path>"
@@ -14340,7 +14340,7 @@ ScriptedImporter:
     spriteName: 
     isGroup: 1
     parentIndex: 460
-    spriteID: 
+    spriteID: 00000000000000000000000000000000
     layerID: 51
     mosaicPosition: {x: 0, y: 0}
   - name: "<Path>\_+\_<Path>\_+\_<Path>\_+\_<Path>\_+\_<Ellipse>\_+\_<Ellipse>\_+\_<Ellipse>\_+\_<Path>\_+\_<Path>"
@@ -14522,7 +14522,7 @@ ScriptedImporter:
     spriteName: 
     isGroup: 1
     parentIndex: -1
-    spriteID: 
+    spriteID: 00000000000000000000000000000000
     layerID: 24
     mosaicPosition: {x: 0, y: 0}
   - name: <Path>
@@ -14543,7 +14543,7 @@ ScriptedImporter:
     spriteName: 
     isGroup: 1
     parentIndex: -1
-    spriteID: 
+    spriteID: 00000000000000000000000000000000
     layerID: 20
     mosaicPosition: {x: 0, y: 0}
   - name: <Path>
@@ -14564,7 +14564,7 @@ ScriptedImporter:
     spriteName: 
     isGroup: 1
     parentIndex: -1
-    spriteID: 
+    spriteID: 00000000000000000000000000000000
     layerID: 16
     mosaicPosition: {x: 0, y: 0}
   - name: <Path>
@@ -14585,7 +14585,7 @@ ScriptedImporter:
     spriteName: 
     isGroup: 1
     parentIndex: -1
-    spriteID: 
+    spriteID: 00000000000000000000000000000000
     layerID: 12
     mosaicPosition: {x: 0, y: 0}
   - name: <Path>
@@ -14613,7 +14613,7 @@ ScriptedImporter:
     spriteName: 
     isGroup: 1
     parentIndex: -1
-    spriteID: 
+    spriteID: 00000000000000000000000000000000
     layerID: 7
     mosaicPosition: {x: 0, y: 0}
   - name: <Path>

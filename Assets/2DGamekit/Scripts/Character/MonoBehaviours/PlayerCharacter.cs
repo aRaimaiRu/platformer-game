@@ -207,7 +207,7 @@ namespace Gamekit2D
 
         void FixedUpdate()
         { 
-            skillList[currentSkill]();
+            // skillList[currentSkill]();
             m_CharacterController2D.Move(m_MoveVector * Time.deltaTime);
             m_Animator.SetFloat(m_HashHorizontalSpeedPara, m_MoveVector.x);
             m_Animator.SetFloat(m_HashVerticalSpeedPara, m_MoveVector.y);
@@ -452,7 +452,6 @@ namespace Gamekit2D
             if (grounded)
             {
                 FindCurrentSurface();
-                Debug.Log(m_CurrentSurface);
                 if (!wasGrounded && m_MoveVector.y < -1.0f)
                 {//only play the landing sound if falling "fast" enough (avoid small bump playing the landing sound)
                     landingAudioPlayer.PlayRandomSound(m_CurrentSurface);

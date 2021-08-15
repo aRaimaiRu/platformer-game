@@ -35,6 +35,7 @@ public class Alibaba : MonoBehaviour
     public GameObject OUAT_DefaultPosition;
     public GameObject OpenSesamePortal;
     public float teleportDelay=0.5f;
+    private bool TopDownMissiling = false;
 
     
 
@@ -50,27 +51,53 @@ public class Alibaba : MonoBehaviour
         SceneLinkedSMB<Alibaba>.Initialise(animator, this);
         ai = BT.Root();
         ai.OpenBranch(
-            // BT.Trigger(animator, "Intro"),
-            BT.Wait(1.0f),
+            BT.Trigger(animator, "Intro"),
+            BT.WaitForAnimatorState(animator,"Idle"),
             BT.While(isNotOnceUponATime).OpenBranch(
-                BT.Call(OpenSesame),
-                BT.Wait(teleportDelay*2),
-                BT.Trigger(animator, "idle"),
-                // BT.Wait(1.0f),
-                BT.Call(TopDownSandMissile),
-                // BT.SetActive(trail,true),
-                BT.Trigger(animator, "Attack"),
-                // BT.Wait(6.0f),
-                // BT.SetActive(trail,false),
-                BT.Call(SpawnSandMissile),
-                BT.Wait(60.0f)
+                BT.RandomSequence(new int[] {1,10,5}).OpenBranch(
+                    BT.Root().OpenBranch(
+                        BT.SetActive(trail,true),
+                        BT.Trigger(animator, "Attack"),
+                        BT.WaitForAnimatorState(animator,"Idle"),
+                        BT.SetActive(trail,false),
+                        BT.Wait(3.0f)
+                    ),
+                    BT.If( ()=>!TopDownMissiling ).OpenBranch(
+                        BT.Trigger(animator, "CallTopDown"),
+                        BT.WaitForAnimatorState(animator,"Idle"),
+                        BT.Wait(3.0f)
+                    ),
+                    BT.If(() =>SandMissile).OpenBranch(
+                        BT.Trigger(animator, "CallLock"),
+                        BT.WaitForAnimatorState(animator,"Idle"),
+                        BT.Wait(3.0f)
+                    )
+                )
             ),
             // trigger Intro OnceUptonATime
+            BT.Trigger(animator, "OUAT"),
             //trigger Aura
+            BT.WaitForAnimatorState(animator,"OUAT_Idle"),
+            BT.Call(OUAT_setup),
             BT.While(isAlive).OpenBranch(
                 //trigger skill
-                // BT.Call(OpenSesame),
-                // BT.Wait(60.0f)
+                BT.RandomSequence(new int[] {1,2,3}).OpenBranch(
+                    BT.Root().OpenBranch(
+                        BT.Call(OpenSesame),
+                        BT.WaitForAnimatorState(animator,"OUAT_Idle")
+                    ),
+                    BT.If( ()=>!TopDownMissiling ).OpenBranch(
+                        BT.Trigger(animator, "CallTopDown"),
+                        BT.WaitForAnimatorState(animator,"OUAT_Idle"),
+                        BT.Wait(3.0f)
+                    ),
+                    BT.If(() =>SandMissile).OpenBranch(
+                        BT.Trigger(animator, "CallLock"),
+                        BT.WaitForAnimatorState(animator,"OUAT_Idle"),
+                        BT.Wait(3.0f)
+                    )
+                )
+                
                 
             )
 
@@ -117,9 +144,11 @@ public class Alibaba : MonoBehaviour
         return new Vector2(this.transform.position.x,this.transform.position.y);
     }
 
-    public void SlashAttack(float Atk1_speed_animation){
+    public void SlashAttack(float t){
         Vector2 target = new Vector2(AttackPoint1.position.x,AttackPoint1.position.y);
-        Vector2 newPos = Vector2.MoveTowards(rb.position,target,Atk1_speed*Time.deltaTime*Atk1_speed_animation);
+        // Vector2 newPos = Vector2.MoveTowards(rb.position,target,Atk1_speed*Time.deltaTime*Atk1_speed_animation);
+        Debug.Log(t);
+        Vector2 newPos =  Vector2.Lerp(defaultPosition.position,target,t);
         rb.MovePosition(newPos);
 
     }
@@ -140,6 +169,7 @@ public class Alibaba : MonoBehaviour
         StartCoroutine(spawnTopDownMissile());
     }
     IEnumerator spawnTopDownMissile(){
+        TopDownMissiling = true;;
         for(int i =0;i<=20;i+=2){
             Vector3 buffer = Top_Position.transform.position +(new Vector3(i,0,0));
             GameObject gb = Instantiate(Missile,buffer,Quaternion.Euler (0f, 0f, 90f));
@@ -156,8 +186,11 @@ public class Alibaba : MonoBehaviour
             gb.GetComponent<NoTargetMssile>().lifetime = 30.0f;
             yield return new WaitForSeconds(0.5f);
         }
+        TopDownMissiling = false;
         
-        
+    }
+    bool GetTopDownMissiling(){
+        return TopDownMissiling;
     }
 
     public bool isNotOnceUponATime(){
@@ -178,5 +211,11 @@ public class Alibaba : MonoBehaviour
         yield return new WaitForSeconds(delay);
         this.transform.position = OUAT_DefaultPosition.transform.position;
     }
+    private void OUAT_setup(){
+        this.transform.position = OUAT_DefaultPosition.transform.position;
+
+    }
+
+
 
 }
