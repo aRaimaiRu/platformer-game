@@ -10,6 +10,7 @@ namespace Gamekit2D
     [RequireComponent(typeof(Animator))]
     public class PlayerCharacter : MonoBehaviour
     {
+        private Dictionary<System.Int32, System.Action> OUAT_List = new Dictionary<System.Int32, System.Action>();
         bool OUATing;
         List<UseSkill> skillList;
         delegate void UseSkill();
@@ -110,7 +111,7 @@ namespace Gamekit2D
         protected readonly int m_HashHurtPara = Animator.StringToHash("Hurt");
         protected readonly int m_HashForcedRespawnPara = Animator.StringToHash("ForcedRespawn");
         protected readonly int m_HashMeleeAttackPara = Animator.StringToHash("MeleeAttack");
-        protected readonly int m_HashHoldingGunPara = Animator.StringToHash("HoldingGun");
+        protected readonly int m_HashHoldingGunPara = Animator.StringToHash("OUAT");
 
         protected const float k_MinHurtJumpAngle = 0.001f;
         protected const float k_MaxHurtJumpAngle = 89.999f;
@@ -135,7 +136,7 @@ namespace Gamekit2D
 
         void Start()
         {
-            CreateSkillList();
+            
             hurtJumpAngle = Mathf.Clamp(hurtJumpAngle, k_MinHurtJumpAngle, k_MaxHurtJumpAngle);
             m_TanHurtJumpAngle = Mathf.Tan(Mathf.Deg2Rad * hurtJumpAngle);
             m_FlickeringWait = new WaitForSeconds(flickeringDuration);
@@ -652,7 +653,7 @@ namespace Gamekit2D
         //     return holdingGun;
         // }
         public bool CheckForHoldingGun(){
-            if(PlayerInput.Instance.RangedAttack.Down)
+            if(PlayerInput.Instance.RangedAttack.Down && OUAT_Gauge.value >=3.0f)
             {
                 OUATing = true;
                 m_Animator.SetBool(m_HashHoldingGunPara, true);
@@ -860,13 +861,6 @@ namespace Gamekit2D
             OUAT_Gauge.value =Mathf.Clamp(OUAT_Gauge.value+Time.deltaTime*multiply,OUAT_Gauge.minValue,OUAT_Gauge.maxValue);
         }
         
-        void CreateSkillList(){
-            skillList = new List<UseSkill>();
-            skillList.Add(Skill1);
-            skillList.Add(Skill2);
-
-        }
-
         public void Skill1(){
             Debug.Log("Skill1");
         }

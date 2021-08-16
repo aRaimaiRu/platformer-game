@@ -10,7 +10,7 @@ namespace Gamekit2D
     
         public override void OnSLStatePostEnter (Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            m_MonoBehaviour.ForceNotHoldingGun();
+            // m_MonoBehaviour.ForceNotHoldingGun();
             m_MonoBehaviour.EnableMeleeAttack();
             m_MonoBehaviour.SetHorizontalMovement(m_MonoBehaviour.meleeAttackDashSpeed * m_MonoBehaviour.GetFacing());
         }
