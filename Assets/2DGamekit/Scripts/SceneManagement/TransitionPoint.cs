@@ -50,6 +50,8 @@ namespace Gamekit2D
 
         void OnTriggerEnter2D (Collider2D other)
         {
+            Debug.Log(transitioningGameObject);
+            Debug.Log(other.gameObject);
             if (other.gameObject == transitioningGameObject)
             {
                 m_TransitioningGameObjectPresent = true;

@@ -9,6 +9,7 @@ using Gamekit2D;
 using Random=UnityEngine.Random;
 public class Alibaba : MonoBehaviour
 {
+    
      Root ai;
     private Animator animator;
     private Vector2 target;
@@ -36,9 +37,8 @@ public class Alibaba : MonoBehaviour
     public GameObject OpenSesamePortal;
     public float teleportDelay=0.5f;
     private bool TopDownMissiling = false;
-
     
-
+    
     void Start()
    {
         animator = GetComponent<Animator>();
@@ -51,7 +51,7 @@ public class Alibaba : MonoBehaviour
         SceneLinkedSMB<Alibaba>.Initialise(animator, this);
         ai = BT.Root();
         ai.OpenBranch(
-            BT.Trigger(animator, "Intro"),
+            // BT.Trigger(animator, "Intro"),
             BT.WaitForAnimatorState(animator,"Idle"),
             BT.While(isNotOnceUponATime).OpenBranch(
                 BT.RandomSequence(new int[] {1,10,5}).OpenBranch(
@@ -147,7 +147,6 @@ public class Alibaba : MonoBehaviour
     public void SlashAttack(float t){
         Vector2 target = new Vector2(AttackPoint1.position.x,AttackPoint1.position.y);
         // Vector2 newPos = Vector2.MoveTowards(rb.position,target,Atk1_speed*Time.deltaTime*Atk1_speed_animation);
-        Debug.Log(t);
         Vector2 newPos =  Vector2.Lerp(defaultPosition.position,target,t);
         rb.MovePosition(newPos);
 
@@ -204,12 +203,15 @@ public class Alibaba : MonoBehaviour
 
     IEnumerator OpenSesameCoroutine(float delay){
         Vector3 buffer = GameObject.FindGameObjectWithTag("Player").transform.position;
-        Instantiate(OpenSesamePortal,this.transform.position,Quaternion.identity);//at self position
-        Instantiate(OpenSesamePortal,buffer,Quaternion.identity);//at player position
+        GameObject go1 = Instantiate(OpenSesamePortal,this.transform.position,Quaternion.identity);//at self position
+        GameObject go2 = Instantiate(OpenSesamePortal,buffer,Quaternion.identity);//at player position
         yield return new WaitForSeconds(delay);
         this.transform.position = buffer;
         yield return new WaitForSeconds(delay);
         this.transform.position = OUAT_DefaultPosition.transform.position;
+        Destroy(go1);
+        Destroy(go2);
+
     }
     private void OUAT_setup(){
         this.transform.position = OUAT_DefaultPosition.transform.position;
