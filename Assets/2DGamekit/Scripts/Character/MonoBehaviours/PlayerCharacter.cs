@@ -424,8 +424,8 @@ namespace Gamekit2D
         }
         public bool CheckFacingWall(float facingx)
         {   
-            // if(Physics2D.Raycast(this.transform.position,new Vector2(facingx,0),0.3f,m_CharacterController2D.groundedLayerMask))Debug.Log("Wall");
-            return Physics2D.Raycast(this.transform.position,new Vector2(facingx,0),0.3f,m_CharacterController2D.groundedLayerMask);
+            // if(Physics2D.Raycast(this.transform.position,new Vector2(facingx,0),m_Capsule.size.x,m_CharacterController2D.groundedLayerMask))Debug.Log("Wall");
+            return Physics2D.Raycast(this.transform.position,new Vector2(facingx,0),this.transform.localScale.x*m_Capsule.size.x+0.3f,m_CharacterController2D.groundedLayerMask);
         }
 
         public float GetFacing()
